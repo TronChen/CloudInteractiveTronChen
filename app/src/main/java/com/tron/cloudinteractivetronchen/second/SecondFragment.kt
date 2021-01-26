@@ -28,10 +28,17 @@ class SecondFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
+        val adapter = SecondAdapter(SecondAdapter.PhotoOnItemClickListener{
+
+        })
+
+        binding.recyclerView.adapter = adapter
+
         viewModel.photo.observe(viewLifecycleOwner, Observer {
             it.forEach {
                 Log.e("Tron", it.toString())
             }
+            adapter.submitList(it)
 
         })
 
