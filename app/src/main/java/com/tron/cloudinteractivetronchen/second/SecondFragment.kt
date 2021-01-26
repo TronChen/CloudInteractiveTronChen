@@ -1,11 +1,13 @@
 package com.tron.cloudinteractivetronchen.second
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.tron.cloudinteractivetronchen.R
 import com.tron.cloudinteractivetronchen.databinding.FragmentFirstBinding
 import com.tron.cloudinteractivetronchen.databinding.FragmentSecondBinding
@@ -25,6 +27,13 @@ class SecondFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+
+        viewModel.photo.observe(viewLifecycleOwner, Observer {
+            it.forEach {
+                Log.e("Tron", it.toString())
+            }
+
+        })
 
         // Inflate the layout for this fragment
         return binding.root

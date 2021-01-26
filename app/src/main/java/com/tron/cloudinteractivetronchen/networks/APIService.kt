@@ -48,7 +48,7 @@ private val retrofit = Retrofit.Builder()
 interface CloudApiService {
 
     @GET("photos")
-    suspend fun getPhotos(): Photo
+    suspend fun getPhotos(): List<Photo>
 
 }
 

@@ -9,4 +9,7 @@ class DefaultCloudRepository(private val cloudRemoteDataSource: CloudDataSource,
                              private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : CloudRepository {
 
+    override suspend fun getPhotos(): AppResult<List<Photo>>{
+        return cloudRemoteDataSource.getPhotos()
+    }
 }
