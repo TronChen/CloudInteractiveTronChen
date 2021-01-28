@@ -21,8 +21,6 @@ class ViewModelFactory constructor(
                 isAssignableFrom(SecondViewModel::class.java) ->
                     SecondViewModel(cloudRepository)
 
-                isAssignableFrom(ThirdViewModel::class.java) ->
-                    ThirdViewModel(cloudRepository)
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

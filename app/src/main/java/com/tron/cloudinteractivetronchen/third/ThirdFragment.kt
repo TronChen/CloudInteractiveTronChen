@@ -14,7 +14,11 @@ import com.tron.cloudinteractivetronchen.first.FirstViewModel
 
 class ThirdFragment : Fragment() {
 
-    private val viewModel by viewModels<ThirdViewModel> { getVmFactory() }
+    private val viewModel by viewModels<ThirdViewModel> { getVmFactory(
+        ThirdFragmentArgs.fromBundle(
+            requireArguments()
+        ).photoProperty)
+     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,6 +29,8 @@ class ThirdFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+
+        binding.imageView2.setImageBitmap(viewModel.photo.value?.bitmap)
 
         // Inflate the layout for this fragment
         return binding.root

@@ -10,13 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.tron.cloudinteractivetronchen.R
-import com.tron.cloudinteractivetronchen.data.Photo
-import com.tron.cloudinteractivetronchen.data.PhotoResult
-import com.tron.cloudinteractivetronchen.databinding.FragmentFirstBinding
+import androidx.navigation.fragment.findNavController
 import com.tron.cloudinteractivetronchen.databinding.FragmentSecondBinding
 import com.tron.cloudinteractivetronchen.ext.getVmFactory
-import com.tron.cloudinteractivetronchen.first.FirstViewModel
 
 class SecondFragment : Fragment() {
 
@@ -34,7 +30,7 @@ class SecondFragment : Fragment() {
         binding.viewModel = viewModel
 
         val adapter = SecondAdapter(SecondAdapter.PhotoOnItemClickListener{
-
+            findNavController().navigate(SecondFragmentDirections.actionGlobalThirdFragment(it))
         }, viewModel)
 
         binding.recyclerView.adapter = adapter
@@ -42,6 +38,7 @@ class SecondFragment : Fragment() {
         viewModel.photo.observe(viewLifecycleOwner, Observer { it ->
             it.forEach {
                 viewModel.returnBitmap(it)
+            Log.e("LLL", viewModel.list.toString())
             }
             adapter.submitList(it)
         })

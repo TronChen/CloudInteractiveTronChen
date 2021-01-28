@@ -17,10 +17,3 @@ data class Photo(
     @IgnoredOnParcel
     var bitmap: Bitmap? = null
 }
-
-@Parcelize
-data class PhotoResult(
-    var photo: Photo? = null,
-    var bitmap: Bitmap? = null
-):Parcelable {
-}

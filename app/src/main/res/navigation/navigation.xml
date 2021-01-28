@@ -19,10 +19,18 @@
         android:id="@+id/secondFragment"
         android:name="com.tron.cloudinteractivetronchen.second.SecondFragment"
         android:label="fragment_second"
-        tools:layout="@layout/fragment_second" />
+        tools:layout="@layout/fragment_second" >
+    </fragment>
     <fragment
         android:id="@+id/thirdFragment"
         android:name="com.tron.cloudinteractivetronchen.third.ThirdFragment"
         android:label="fragment_third"
-        tools:layout="@layout/fragment_third" /><action android:id="@+id/action_global_firstFragment" app:destination="@id/firstFragment"/><action android:id="@+id/action_global_secondFragment" app:destination="@id/secondFragment"/><action android:id="@+id/action_global_thirdFragment" app:destination="@id/thirdFragment"/>
+        tools:layout="@layout/fragment_third" >
+        <argument
+            android:name="photoProperty"
+            app:argType="com.tron.cloudinteractivetronchen.data.Photo" />
+    </fragment>
+    <action android:id="@+id/action_global_firstFragment" app:destination="@id/firstFragment"/>
+    <action android:id="@+id/action_global_secondFragment" app:destination="@id/secondFragment"/>
+    <action android:id="@+id/action_global_thirdFragment" app:destination="@id/thirdFragment"/>
 </navigation>

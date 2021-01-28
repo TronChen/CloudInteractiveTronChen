@@ -30,6 +30,8 @@ class SecondViewModel(
     val photo: LiveData<List<Photo>>
         get() = _photo
 
+    val list = mutableListOf<Photo>()
+
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<LoadApiStatus>()
 
