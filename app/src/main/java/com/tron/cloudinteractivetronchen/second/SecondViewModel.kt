@@ -1,20 +1,24 @@
 package com.tron.cloudinteractivetronchen.second
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.AsyncTask
 import android.util.Log
+import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.tron.cloudinteractivetronchen.R
-import com.tron.cloudinteractivetronchen.data.AppResult
-import com.tron.cloudinteractivetronchen.data.CloudRepository
-import com.tron.cloudinteractivetronchen.data.Photo
-import com.tron.cloudinteractivetronchen.data.succeeded
+import com.tron.cloudinteractivetronchen.data.*
 import com.tron.cloudinteractivetronchen.networks.LoadApiStatus
+import com.tron.cloudinteractivetronchen.networks.PicApi
 import com.tron.cloudinteractivetronchen.util.Utils.getString
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import java.io.IOException
+import java.io.InputStream
+import java.net.URL
+
 
 class SecondViewModel(
     private val cloudRepository: CloudRepository
@@ -55,6 +59,7 @@ class SecondViewModel(
 
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+    private val coroutineScope2 = CoroutineScope(viewModelJob + Dispatchers.IO)
 
     /**
      * When the [ViewModel] is finished, we cancel our coroutine [viewModelJob], which tells the
@@ -102,6 +107,34 @@ class SecondViewModel(
             }
             _refreshStatus.value = false
         }
+    }
+
+
+    fun returnBitmap(photo: Photo) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                photo.thumbnailUrl?.let {
+                    urlToBitmap(it)
+                }
+            }.let {
+                photo.bitmap = it
+            }
+        }
+    }
+
+    private fun urlToBitmap (url: String): Bitmap? {
+
+        var bitmap: Bitmap? = null
+        try {
+            val conn = URL(url).openConnection().apply {
+                setRequestProperty("User-Agent", "custom-agent")
+            }
+            bitmap = BitmapFactory.decodeStream(conn.getInputStream())
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Log.e("SSSS","AKAKAKA")
+        }
+            return bitmap
     }
 
 }

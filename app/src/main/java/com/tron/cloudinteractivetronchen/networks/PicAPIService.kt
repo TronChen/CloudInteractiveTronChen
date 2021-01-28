@@ -1,15 +1,22 @@
 package com.tron.cloudinteractivetronchen.networks
 
+import android.graphics.Bitmap
+import com.google.gson.GsonBuilder
 import com.tron.cloudinteractivetronchen.BuildConfig
-import com.tron.cloudinteractivetronchen.data.Photo
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Query
 
 
-private const val BASE_URL = "https://jsonplaceholder.typicode.com"
+private const val BASE_URL = "https://via.placeholder.com"
+
+var gson = GsonBuilder()
+    .setLenient()
+    .create()
 
 private val client = OkHttpClient.Builder()
     .addInterceptor(HttpLoggingInterceptor().apply {
@@ -22,20 +29,20 @@ private val client = OkHttpClient.Builder()
 
 
 private val retrofit = Retrofit.Builder()
-    .addConverterFactory(GsonConverterFactory.create())
+    .addConverterFactory(GsonConverterFactory.create(gson))
     .baseUrl(BASE_URL)
     .client(client)
     .build()
 
 
-interface CloudApiService {
+interface PicAPIService {
 
-    @GET("photos")
-    suspend fun getPhotos(): List<Photo>
+    @GET("150")
+    suspend fun getBitmaps(@Query("id")id : String): Bitmap
 
 }
 
 
-object CloudApi {
-    val retrofitService : CloudApiService by lazy { retrofit.create(CloudApiService::class.java) }
+object PicApi {
+    val retrofitService : PicAPIService by lazy { retrofit.create(PicAPIService::class.java) }
 }

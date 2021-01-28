@@ -1,7 +1,10 @@
 package com.tron.cloudinteractivetronchen.data
 
+import android.graphics.Bitmap
 import android.os.Parcelable
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
+
 
 @Parcelize
 data class Photo(
@@ -10,4 +13,14 @@ data class Photo(
     var title: String? = null,
     var url: String? = null,
     var thumbnailUrl: String? = null
-):Parcelable
+):Parcelable {
+    @IgnoredOnParcel
+    var bitmap: Bitmap? = null
+}
+
+@Parcelize
+data class PhotoResult(
+    var photo: Photo? = null,
+    var bitmap: Bitmap? = null
+):Parcelable {
+}
