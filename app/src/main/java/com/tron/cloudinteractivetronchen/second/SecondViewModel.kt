@@ -24,6 +24,7 @@ class SecondViewModel(
     private val cloudRepository: CloudRepository
 ) : ViewModel() {
 
+
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _photo = MutableLiveData<List<Photo>>()
 
@@ -31,6 +32,12 @@ class SecondViewModel(
         get() = _photo
 
     val list = mutableListOf<Photo>()
+
+    // status: The internal MutableLiveData that stores the status of the most recent request
+    val _photoList = MutableLiveData<List<Photo>>()
+
+    val photoList: LiveData<List<Photo>>
+        get() = _photoList
 
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<LoadApiStatus>()
@@ -112,7 +119,7 @@ class SecondViewModel(
     }
 
 
-    fun returnBitmap(photo: Photo) {
+    fun loadURLToBitmapReturnPhoto(photo: Photo) : Photo {
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 photo.thumbnailUrl?.let {
@@ -122,6 +129,7 @@ class SecondViewModel(
                 photo.bitmap = it
             }
         }
+        return photo
     }
 
     private fun urlToBitmap (url: String): Bitmap? {

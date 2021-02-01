@@ -50,7 +50,7 @@ class SecondAdapter(private val itemClickListener: PhotoOnItemClickListener, pri
         fun bind(photo: Photo) {
 
             binding.photo = photo
-            Log.e("Bitmap", photo.bitmap.toString())
+//            Log.e("Bitmap", photo.bitmap.toString())
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
             binding.executePendingBindings()

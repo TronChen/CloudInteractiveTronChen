@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.tron.cloudinteractivetronchen.R
 import com.tron.cloudinteractivetronchen.databinding.FragmentSecondBinding
 import com.tron.cloudinteractivetronchen.databinding.FragmentThirdBinding
@@ -31,6 +32,10 @@ class ThirdFragment : Fragment() {
         binding.viewModel = viewModel
 
         binding.imageView2.setImageBitmap(viewModel.photo.value?.bitmap)
+
+        binding.imageView2.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         // Inflate the layout for this fragment
         return binding.root
