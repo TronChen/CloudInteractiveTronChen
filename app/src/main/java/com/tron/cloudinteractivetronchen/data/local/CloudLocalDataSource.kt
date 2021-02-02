@@ -14,13 +14,13 @@ class CloudLocalDataSource(val context: Context) : CloudDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun saveBitmapToCache(key: String, bitmap: Bitmap) {
+    override suspend fun saveBitmapToCache(key: Int, bitmap: Bitmap) {
         withContext(Dispatchers.IO) {
             Cache.instance.saveBitmapToCache(key, bitmap)
         }
     }
 
-    override suspend fun retrieveBitmapFromCache(key: String): Bitmap? {
+    override suspend fun retrieveBitmapFromCache(key: Int): Bitmap? {
         return withContext(Dispatchers.IO) {
             Cache.instance.retrieveBitmapFromCache(key)
         }

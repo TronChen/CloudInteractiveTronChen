@@ -14,11 +14,11 @@ class DefaultCloudRepository(private val cloudRemoteDataSource: CloudDataSource,
         return cloudRemoteDataSource.getPhotos()
     }
 
-    override suspend fun saveBitmapToCache(key: String, bitmap: Bitmap){
+    override suspend fun saveBitmapToCache(key: Int, bitmap: Bitmap){
         return cloudLocalDataSource.saveBitmapToCache(key, bitmap)
     }
 
-    override suspend fun retrieveBitmapFromCache(key: String): Bitmap?{
+    override suspend fun retrieveBitmapFromCache(key: Int): Bitmap?{
         return cloudLocalDataSource.retrieveBitmapFromCache(key)
     }
 }

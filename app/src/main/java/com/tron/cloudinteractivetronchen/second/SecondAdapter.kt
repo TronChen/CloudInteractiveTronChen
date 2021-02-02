@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tron.cloudinteractivetronchen.data.CloudRepository
 import com.tron.cloudinteractivetronchen.data.Photo
 import com.tron.cloudinteractivetronchen.databinding.ItemListPhotoBinding
+import com.tron.cloudinteractivetronchen.networks.LoadApiStatus
 
 
 class SecondAdapter(private val itemClickListener: PhotoOnItemClickListener, private val viewModel: SecondViewModel)
@@ -28,13 +29,14 @@ class SecondAdapter(private val itemClickListener: PhotoOnItemClickListener, pri
 
                 val photo = item as Photo
                 holder.bind(photo)
-//                holder.binding.imageView.setImageBitmap(photo.bitmap)
 
                 if (viewModel.photoListMap[position] == null){
                     holder.binding.imageView.setImageBitmap(null)
-                    viewModel.loadURLToBitmapReturnPhoto(photo, position - 1)
+                    viewModel.retrieveBitmapFromCache(photo, position - 1)
+                    viewModel._status.value = LoadApiStatus.LOADING
                 }else{
                     holder.binding.imageView.setImageBitmap(viewModel.photoListMap[position - 1])
+                    viewModel._status.value = LoadApiStatus.DONE
                 }
 
                 holder.binding.imageView.setOnClickListener {

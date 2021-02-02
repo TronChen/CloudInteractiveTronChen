@@ -8,12 +8,15 @@ import com.tron.cloudinteractivetronchen.data.AppResult
 import com.tron.cloudinteractivetronchen.data.CloudDataSource
 import com.tron.cloudinteractivetronchen.data.Photo
 import com.tron.cloudinteractivetronchen.networks.CloudApi
+import com.tron.cloudinteractivetronchen.second.SecondViewModel
 import com.tron.cloudinteractivetronchen.util.Utils.getString
 import com.tron.cloudinteractivetronchen.util.Utils.isInternetConnected
 import java.io.IOException
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 object CloudRemoteDataSource : CloudDataSource {
 
@@ -25,9 +28,6 @@ object CloudRemoteDataSource : CloudDataSource {
         return try {
             // this will run on a thread managed by Retrofit
             val listResult = CloudApi.retrofitService.getPhotos()
-            listResult.forEach {
-//                it.bitmap = getBitmapFromURL(it.thumbnailUrl)
-            }
             return AppResult.Success(listResult)
 
         } catch (e: Exception) {
@@ -36,11 +36,11 @@ object CloudRemoteDataSource : CloudDataSource {
         }
     }
 
-    override suspend fun saveBitmapToCache(key: String, bitmap: Bitmap) {
+    override suspend fun saveBitmapToCache(key: Int, bitmap: Bitmap) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun retrieveBitmapFromCache(key: String): Bitmap? {
+    override suspend fun retrieveBitmapFromCache(key: Int): Bitmap? {
         TODO("Not yet implemented")
     }
 }

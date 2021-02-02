@@ -12,11 +12,9 @@ import androidx.lifecycle.viewModelScope
 import com.tron.cloudinteractivetronchen.R
 import com.tron.cloudinteractivetronchen.data.*
 import com.tron.cloudinteractivetronchen.networks.LoadApiStatus
-import com.tron.cloudinteractivetronchen.networks.PicApi
 import com.tron.cloudinteractivetronchen.util.Utils.getString
 import kotlinx.coroutines.*
 import java.io.IOException
-import java.io.InputStream
 import java.net.URL
 
 
@@ -35,8 +33,6 @@ class SecondViewModel(
 
     var updateBitmap = MutableLiveData<Int>()
 
-    val list = mutableListOf<Photo>()
-
     // status: The internal MutableLiveData that stores the status of the most recent request
     val _photoList = MutableLiveData<List<Photo>>()
 
@@ -44,7 +40,7 @@ class SecondViewModel(
         get() = _photoList
 
     // status: The internal MutableLiveData that stores the status of the most recent request
-    private val _status = MutableLiveData<LoadApiStatus>()
+    val _status = MutableLiveData<LoadApiStatus>()
 
     val status: LiveData<LoadApiStatus>
         get() = _status
@@ -123,19 +119,32 @@ class SecondViewModel(
     }
 
 
-    fun loadURLToBitmapReturnPhoto(photo: Photo, position : Int) : Photo {
+    fun retrieveBitmapFromCache(photo: Photo,position: Int){
+        viewModelScope.launch {
+         val result = cloudRepository.retrieveBitmapFromCache(position)
+            if (result == null){
+                loadURLToBitmapReturnPhoto(photo, position)
+            }else{
+                photo.bitmap = result
+                photoListMap[position] = result
+                updateBitmap.value = position + 1
+            }
+        }
+    }
+
+    private fun loadURLToBitmapReturnPhoto(photo: Photo, position : Int){
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 photo.thumbnailUrl?.let {
                     urlToBitmap(it)
                 }
             }.let {
+                cloudRepository.saveBitmapToCache(position, it!!)
                 photo.bitmap = it
                 photoListMap[position] = it
                 updateBitmap.value = position + 1
             }
         }
-        return photo
     }
 
     private fun urlToBitmap (url: String): Bitmap? {

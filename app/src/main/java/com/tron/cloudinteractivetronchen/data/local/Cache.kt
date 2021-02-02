@@ -14,7 +14,7 @@ class Cache private constructor() {
     }
     val lru: LruCache<Any, Any> = LruCache(1024)
 
-    fun saveBitmapToCache(key: String, bitmap: Bitmap) {
+    fun saveBitmapToCache(key: Int, bitmap: Bitmap) {
 
         try {
             instance.lru.put(key, bitmap)
@@ -23,7 +23,7 @@ class Cache private constructor() {
 
     }
 
-    fun retrieveBitmapFromCache(key: String): Bitmap? {
+    fun retrieveBitmapFromCache(key: Int): Bitmap? {
 
         try {
             return instance.lru.get(key) as Bitmap?
