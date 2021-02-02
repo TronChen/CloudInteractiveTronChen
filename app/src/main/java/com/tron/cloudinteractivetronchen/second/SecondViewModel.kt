@@ -31,6 +31,10 @@ class SecondViewModel(
     val photo: LiveData<List<Photo>>
         get() = _photo
 
+    val photoListMap = mutableMapOf<Int, Bitmap?>()
+
+    var updateBitmap = MutableLiveData<Int>()
+
     val list = mutableListOf<Photo>()
 
     // status: The internal MutableLiveData that stores the status of the most recent request
@@ -68,7 +72,7 @@ class SecondViewModel(
 
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-    private val coroutineScope2 = CoroutineScope(viewModelJob + Dispatchers.IO)
+
 
     /**
      * When the [ViewModel] is finished, we cancel our coroutine [viewModelJob], which tells the
@@ -119,7 +123,7 @@ class SecondViewModel(
     }
 
 
-    fun loadURLToBitmapReturnPhoto(photo: Photo) : Photo {
+    fun loadURLToBitmapReturnPhoto(photo: Photo, position : Int) : Photo {
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 photo.thumbnailUrl?.let {
@@ -127,6 +131,8 @@ class SecondViewModel(
                 }
             }.let {
                 photo.bitmap = it
+                photoListMap[position] = it
+                updateBitmap.value = position + 1
             }
         }
         return photo

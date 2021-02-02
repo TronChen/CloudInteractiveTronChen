@@ -9,5 +9,7 @@ interface CloudDataSource {
 
     suspend fun getPhotos(): AppResult<List<Photo>>
 
-    suspend fun getBitmapFromURL(src: String?): Bitmap?
+    suspend fun saveBitmapToCache(key: String, bitmap: Bitmap)
+
+    suspend fun retrieveBitmapFromCache(key: String): Bitmap?
 }

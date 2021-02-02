@@ -36,18 +36,11 @@ object CloudRemoteDataSource : CloudDataSource {
         }
     }
 
-    override suspend fun getBitmapFromURL(src: String?): Bitmap? {
-        return try {
-            val url = URL(src)
-            val connection =
-                url.openConnection() as HttpURLConnection
-            connection.doInput = true
-            connection.connect()
-            val input: InputStream = connection.inputStream
-            BitmapFactory.decodeStream(input)
-        } catch (e: IOException) {
-            // Log exception
-            null
-        }
+    override suspend fun saveBitmapToCache(key: String, bitmap: Bitmap) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun retrieveBitmapFromCache(key: String): Bitmap? {
+        TODO("Not yet implemented")
     }
 }

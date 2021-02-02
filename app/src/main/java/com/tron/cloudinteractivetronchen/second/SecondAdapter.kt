@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.tron.cloudinteractivetronchen.data.CloudRepository
 import com.tron.cloudinteractivetronchen.data.Photo
 import com.tron.cloudinteractivetronchen.databinding.ItemListPhotoBinding
 
@@ -27,7 +28,15 @@ class SecondAdapter(private val itemClickListener: PhotoOnItemClickListener, pri
 
                 val photo = item as Photo
                 holder.bind(photo)
-                holder.binding.imageView.setImageBitmap(photo.bitmap)
+//                holder.binding.imageView.setImageBitmap(photo.bitmap)
+
+                if (viewModel.photoListMap[position] == null){
+                    holder.binding.imageView.setImageBitmap(null)
+                    viewModel.loadURLToBitmapReturnPhoto(photo, position - 1)
+                }else{
+                    holder.binding.imageView.setImageBitmap(viewModel.photoListMap[position - 1])
+                }
+
                 holder.binding.imageView.setOnClickListener {
                     itemClickListener.onItemClicked(photo)
                 }
@@ -48,9 +57,8 @@ class SecondAdapter(private val itemClickListener: PhotoOnItemClickListener, pri
 
     class PhotoViewHolder(val binding: ItemListPhotoBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(photo: Photo) {
-
             binding.photo = photo
-//            Log.e("Bitmap", photo.bitmap.toString())
+            Log.e("Bitmap", photo.bitmap.toString())
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
             binding.executePendingBindings()

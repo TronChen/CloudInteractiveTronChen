@@ -1,4 +1,4 @@
-package com.tron.cloudinteractivetronchen
+package com.tron.cloudinteractivetronchen.data.local
 
 import android.graphics.Bitmap
 import android.util.LruCache
@@ -17,7 +17,7 @@ class Cache private constructor() {
     fun saveBitmapToCache(key: String, bitmap: Bitmap) {
 
         try {
-            Cache.instance.lru.put(key, bitmap)
+            instance.lru.put(key, bitmap)
         } catch (e: Exception) {
         }
 
@@ -26,7 +26,7 @@ class Cache private constructor() {
     fun retrieveBitmapFromCache(key: String): Bitmap? {
 
         try {
-            return Cache.instance.lru.get(key) as Bitmap?
+            return instance.lru.get(key) as Bitmap?
         } catch (e: Exception) {
         }
 
