@@ -1,13 +1,15 @@
 package com.tron.cloudinteractivetronchen.data
 
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 
 
-/**
- * Created by Wayne Chen in Jul. 2019.
- *
- * Main entry point for accessing Stylish sources.
- */
+
 interface CloudDataSource {
 
+    suspend fun getPhotos(): AppResult<List<Photo>>
+
+    suspend fun saveBitmapToCache(key: Int, bitmap: Bitmap)
+
+    suspend fun retrieveBitmapFromCache(key: Int): Bitmap?
 }
