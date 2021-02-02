@@ -34,12 +34,6 @@ class SecondViewModel(
     var updateBitmap = MutableLiveData<Int>()
 
     // status: The internal MutableLiveData that stores the status of the most recent request
-    val _photoList = MutableLiveData<List<Photo>>()
-
-    val photoList: LiveData<List<Photo>>
-        get() = _photoList
-
-    // status: The internal MutableLiveData that stores the status of the most recent request
     val _status = MutableLiveData<LoadApiStatus>()
 
     val status: LiveData<LoadApiStatus>
@@ -157,7 +151,6 @@ class SecondViewModel(
             bitmap = BitmapFactory.decodeStream(conn.getInputStream())
         } catch (e: IOException) {
             e.printStackTrace()
-            Log.e("SSSS","AKAKAKA")
         }
             return bitmap
     }

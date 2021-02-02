@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.tron.cloudinteractivetronchen.data.CloudRepository
 import com.tron.cloudinteractivetronchen.first.FirstViewModel
 import com.tron.cloudinteractivetronchen.second.SecondViewModel
-import com.tron.cloudinteractivetronchen.third.ThirdViewModel
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory constructor(
